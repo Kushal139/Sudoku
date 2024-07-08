@@ -3,18 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sudoku Solver</title>
+  <title>Sudoku</title>
   <link rel="stylesheet" href="style.css">
-
+  
 </head>
 <body>
-  <h1>Sudoku Solver</h1>
-  <button id="GetPuzzle">Get Puzzle (Easy)</button>
-  <button id="SolvePuzzle">Solve Puzzle</button>
-  <br><br>
-  <div class="sudoku" id="sudoku-container">
+  <h1>Sudoku Clone</h1>
+  <div id="container">
+    <div class="controls">
+      <button id="new-game">New Game</button>
+      <button id="reset">Reset</button>
+      <select id="difficulty">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+    </div>
+    
+    <div id="sudoku-grid"></div>
+    <div class="number-pad">
+      <button data-number="1">1</button>
+      <button data-number="2">2</button>
+      <button data-number="3">3</button>
+      <button data-number="4">4</button>
+      <button data-number="5">5</button>
+      <button data-number="6">6</button>
+      <button data-number="7">7</button>
+      <button data-number="8">8</button>
+      <button data-number="9">9</button>
+    </div>
   </div>
-
+    
   <script src="script.js"></script>
 </body>
 </html>
