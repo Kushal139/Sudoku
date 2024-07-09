@@ -33,9 +33,7 @@ let sudokuBoard = [];
 let solvedBoard = [];
 
 function fillBoard(puzzleValues) {
-  if(selectedCell.classList.contains('incorrect')){
-    selectedCell.classList.remove('incorrect');
-  }
+  removeClassFromAll("cell", "incorrect");
   for(let i=0; i<9; i++){
     for(let j=0; j<9; j++){
       const cell = document.querySelector('#id'+(9*i+j));
@@ -50,7 +48,7 @@ function fillBoard(puzzleValues) {
     }
   }
 }
-
+createSudokuGrid();
 async function getPuzzleValues() {
   let difficultyLevel = difficulty.value;
   const url = `https://sugoku.onrender.com/board?difficulty=${difficultyLevel}`;
@@ -60,16 +58,22 @@ async function getPuzzleValues() {
 }
 
 async function initializeGame() {
-  createSudokuGrid();
   sudokuBoard = await getPuzzleValues();
-  console.log("Initial Board:", sudokuBoard);
-  solvedBoard = JSON.parse(JSON.stringify(sudokuBoard)); // Deep copy for the solved board
+  // console.log("Initial Board:", sudokuBoard);
+  solvedBoard = JSON.parse(JSON.stringify(sudokuBoard));
   solveBoard(solvedBoard);
-  console.log("Solved Board:", solvedBoard);
+  // console.log("Solved Board:", solvedBoard);
   fillBoard(sudokuBoard);
 }
 
 initializeGame();
+
+function removeClassFromAll(className, classToRemove) {
+  const elements = document.querySelectorAll(`.${className}`);
+  elements.forEach(element => {
+      element.classList.remove(classToRemove);
+  });
+}
 
 newGameButton.addEventListener('click', initializeGame);
 resetButton.addEventListener('click', () => fillBoard(sudokuBoard));
@@ -101,7 +105,25 @@ function onNumberClick(event) {
     }
   }
 }
-
+function solveBoard(board){
+  for(let row = 0; row < 9; row++){
+    for(let col = 0; col < 9; col++){
+      if(board[row][col] == 0){
+        for(let num = 1; num <= 9; num++){
+          if(isSafe(board, row, col, num)){
+            board[row][col] = num;
+            if(solveBoard(board)){
+              return true;
+            }
+            board[row][col] = 0; 
+          }
+        }
+        return false;
+      }
+    }
+  }
+  return true;
+}
 function isSafe(board, row, col, value){
   // in row
   for(let j= 0; j<9; j++){
@@ -121,26 +143,6 @@ function isSafe(board, row, col, value){
   for(let i = startRow; i < startRow + 3; i++){
     for(let j = startCol; j < startCol + 3; j++){
       if(board[i][j] == value){
-        return false;
-      }
-    }
-  }
-  return true;
-}
-
-function solveBoard(board){
-  for(let row = 0; row < 9; row++){
-    for(let col = 0; col < 9; col++){
-      if(board[row][col] == 0){
-        for(let num = 1; num <= 9; num++){
-          if(isSafe(board, row, col, num)){
-            board[row][col] = num;
-            if(solveBoard(board)){
-              return true;
-            }
-            board[row][col] = 0; 
-          }
-        }
         return false;
       }
     }
