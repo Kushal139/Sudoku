@@ -4,6 +4,7 @@ body {
     padding: 0px;
     background-color: rgb(228, 198, 250);
 }
+
 #container {
     display: flex;
     flex-wrap: wrap;
@@ -13,6 +14,7 @@ body {
     align-items: center;
     flex-direction: column;
 }
+
 h1 {
     text-align: center;
 }
@@ -20,21 +22,13 @@ h1 {
 .controls {
     display: flex;
     width: 360px;
-    /* border: 2px solid #080303; */
     justify-content: space-between;
     margin-bottom: 20px;
 }
 
-.controls button {
-    padding: 10px 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: rgba(155, 93, 151, 0.491);
-}
-
+.controls button,
 .controls select {
-    padding: 10px;
+    padding: 10px 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
@@ -50,8 +44,8 @@ h1 {
 }
 
 #sudoku-grid div {
-    width: calc(100% /3);
-    height: calc(100% /3);
+    width: calc(100% / 3);
+    height: calc(100% / 3);
     border: 1px solid #030000;
     box-sizing: border-box;
     text-align: center;
@@ -59,19 +53,8 @@ h1 {
     font-size: 20px;
     cursor: pointer;
 }
-#sudoku-grid .class0 {
-    display: flex;
-    flex-wrap: wrap;
-    width: 120px;
-    height: 120px;
-    border: 1px solid #242222;
-    box-sizing: border-box;
-    text-align: center;
-    line-height: 40px;
-    font-size: 20px;
-    cursor: pointer;
-    background-color: rgb(186, 181, 181);
-}
+
+#sudoku-grid .class0,
 #sudoku-grid .class1 {
     display: flex;
     flex-wrap: wrap;
@@ -83,12 +66,19 @@ h1 {
     line-height: 40px;
     font-size: 20px;
     cursor: pointer;
+}
+
+#sudoku-grid .class0 {
+    background-color: rgb(186, 181, 181);
+}
+
+#sudoku-grid .class1 {
     background-color: #f5f2f2;
 }
+
 .number-pad {
     display: flex;
     width: 360px;
-
     flex-wrap: wrap;
     justify-content: space-around;
     margin-top: 20px;
@@ -101,4 +91,131 @@ h1 {
     cursor: pointer;
     margin: 5px;
 }
-  
+
+.cell:hover,
+button:hover {
+    background-color: rgba(137, 211, 211, 0.297);
+}
+
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#sudoku-grid .cell.highlight {
+    border: 4px solid yellow;
+}
+
+#sudoku-grid .cell.incorrect {
+    background-color: rgb(213, 25, 25);
+}
+
+#sudoku-grid .cell.highlight.incorrect {
+    border: 4px solid yellow;
+    background-color: rgb(213, 25, 25);
+}
+
+/* Media Queries
+
+/* Small devices (phones, 600px and down) */
+/* @media only screen and (max-width: 600px) {
+    #container {
+        margin: 15px;
+    }
+    .controls {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+    .controls button,
+    .controls select {
+        width: 80%;
+        margin: 5px 0;
+    }
+    #sudoku-grid {
+        width: 100%;
+        height: auto;
+    }
+    #sudoku-grid div {
+        height: calc(100vw / 9);
+        line-height: calc(100vw / 9);
+        font-size: calc(100vw / 15);
+    }
+    .number-pad {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+    .number-pad button {
+        width: 80%;
+        margin: 5px 0;
+    }
+}
+
+/* Medium devices (tablets, 600px to 900px) */
+/* @media only screen and (min-width: 601px) and (max-width: 900px) {
+    #container {
+        margin: 20px;
+    }
+    .controls {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    .controls button,
+    .controls select {
+        width: 40%;
+        margin: 5px;
+    }
+    #sudoku-grid {
+        width: 80%;
+        height: auto;
+    }
+    #sudoku-grid div {
+        height: calc(80vw / 9);
+        line-height: calc(80vw / 9);
+        font-size: calc(80vw / 15);
+    }
+    .number-pad {
+        width: 80%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    .number-pad button {
+        width: 40%;
+        margin: 5px;
+    }
+}
+
+/* Large devices (laptops/desktops, 900px and up) */
+/* @media only screen and (min-width: 901px) {
+    #container {
+        margin: 30px;
+    }
+    .controls {
+        width: 360px;
+    }
+    #sudoku-grid {
+        width: 360px;
+        height: 360px;
+    }
+    #sudoku-grid div {
+        height: calc(100% / 3);
+        line-height: 40px;
+        font-size: 20px;
+    }
+    .number-pad {
+        width: 360px;
+    }
+    .number-pad button {
+        width: auto;
+        margin: 5px;
+    }
+} */ 
