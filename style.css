@@ -10,6 +10,7 @@ body {
     flex-wrap: wrap;
     height: 100%;
     margin: calc(100% /20);
+    margin-top: 0px;
     align-items: center;
     justify-content: space-around;
     align-items: center;
