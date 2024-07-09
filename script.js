@@ -33,6 +33,9 @@ let sudokuBoard = [];
 let solvedBoard = [];
 
 function fillBoard(puzzleValues) {
+  if(selectedCell.classList.contains('incorrect')){
+    selectedCell.classList.remove('incorrect');
+  }
   for(let i=0; i<9; i++){
     for(let j=0; j<9; j++){
       const cell = document.querySelector('#id'+(9*i+j));
@@ -99,13 +102,6 @@ function onNumberClick(event) {
   }
 }
 
-function getRowColFromId(cellId){
-  const idNumber = parseInt(cellId.replace('id', ''));
-  const row = Math.floor(idNumber/9);
-  const col = idNumber % 9;
-  return {row, col};
-}
-
 function isSafe(board, row, col, value){
   // in row
   for(let j= 0; j<9; j++){
@@ -142,7 +138,7 @@ function solveBoard(board){
             if(solveBoard(board)){
               return true;
             }
-            board[row][col] = 0; // Backtrack
+            board[row][col] = 0; 
           }
         }
         return false;
@@ -150,4 +146,10 @@ function solveBoard(board){
     }
   }
   return true;
+}
+function getRowColFromId(cellId){
+  const idNumber = parseInt(cellId.replace('id', ''));
+  const row = Math.floor(idNumber/9);
+  const col = idNumber % 9;
+  return {row, col};
 }

@@ -108,16 +108,16 @@ button:hover {
 }
 
 #sudoku-grid .cell.highlight {
-    border: 4px solid yellow;
+    border: 3px solid yellow;
 }
 
 #sudoku-grid .cell.incorrect {
-    background-color: rgb(213, 25, 25);
+    background-color: rgb(238, 123, 123);
 }
 
 #sudoku-grid .cell.highlight.incorrect {
-    border: 4px solid yellow;
-    background-color: rgb(213, 25, 25);
+    border: 3px solid yellow;
+    background-color: rgb(238, 123, 123);
 }
 
 /* Apply styles for screens wider than 768px */
@@ -138,4 +138,13 @@ button:hover {
         border-radius: 4px;
         margin: 2px;
     }
+    #sudoku-grid .cell.highlight {
+        border: 2px solid yellow;
+    }
+    
+    #sudoku-grid .cell.highlight.incorrect {
+        border: 2px solid yellow;
+        background-color: rgb(238, 123, 123);
+    }
+
 } 
