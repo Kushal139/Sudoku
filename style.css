@@ -8,7 +8,8 @@ body {
 #container {
     display: flex;
     flex-wrap: wrap;
-    margin: 30px;
+    height: 100%;
+    margin: calc(100% /20);
     align-items: center;
     justify-content: space-around;
     align-items: center;
@@ -22,14 +23,14 @@ h1 {
 .controls {
     display: flex;
     width: 360px;
-    margin-left: calc(360 / 20);
+    height: 28.33%;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 2.5%;
 }
 
 .controls button,
 .controls select {
-    padding: 10px 20px;
+    padding: 3%;
     border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
@@ -40,18 +41,18 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     width: 360px;
-    height: 360px;
+    aspect-ratio: 1/1;
     border: 1px solid #ccc;
 }
 
 #sudoku-grid div {
     width: calc(100% / 3);
-    height: calc(100% / 3);
+    aspect-ratio: 1/1;
     border: 1px solid #030000;
     box-sizing: border-box;
     text-align: center;
-    line-height: 40px;
-    font-size: 20px;
+    /* line-height: 40px; */
+    font-size:medium;
     cursor: pointer;
 }
 
@@ -59,13 +60,12 @@ h1 {
 #sudoku-grid .class1 {
     display: flex;
     flex-wrap: wrap;
-    width: 120px;
-    height: 120px;
+    width: calc(100% / 3);
+    aspect-ratio: 1/1;
     border: 1px solid #242222;
     box-sizing: border-box;
     text-align: center;
-    line-height: 40px;
-    font-size: 20px;
+    /* line-height: 40px; */
     cursor: pointer;
 }
 
@@ -103,8 +103,7 @@ button:hover {
     justify-content: center;
     align-items: center;
     text-align: center;
-    line-height: 40px;
-    font-size: 20px;
+    font-size: medium;
     cursor: pointer;
 }
 
@@ -121,102 +120,22 @@ button:hover {
     background-color: rgb(213, 25, 25);
 }
 
-/* Media Queries
-
-/* Small devices (phones, 600px and down) */
-/* @media only screen and (max-width: 600px) {
-    #container {
-        margin: 15px;
-    }
+/* Apply styles for screens wider than 768px */
+@media (max-width: 360px) {
     .controls {
         width: 100%;
-        flex-direction: column;
-        align-items: center;
-    }
-    .controls button,
-    .controls select {
-        width: 80%;
-        margin: 5px 0;
     }
     #sudoku-grid {
         width: 100%;
-        height: auto;
+        aspect-ratio: 1/1;
     }
-    #sudoku-grid div {
-        height: calc(100vw / 9);
-        line-height: calc(100vw / 9);
-        font-size: calc(100vw / 15);
-    }
+
     .number-pad {
         width: 100%;
-        flex-direction: column;
-        align-items: center;
     }
     .number-pad button {
-        width: 80%;
-        margin: 5px 0;
+        padding: 6px 8px;
+        border-radius: 4px;
+        margin: 2px;
     }
-}
-
-/* Medium devices (tablets, 600px to 900px) */
-/* @media only screen and (min-width: 601px) and (max-width: 900px) {
-    #container {
-        margin: 20px;
-    }
-    .controls {
-        width: 100%;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
-    .controls button,
-    .controls select {
-        width: 40%;
-        margin: 5px;
-    }
-    #sudoku-grid {
-        width: 80%;
-        height: auto;
-    }
-    #sudoku-grid div {
-        height: calc(80vw / 9);
-        line-height: calc(80vw / 9);
-        font-size: calc(80vw / 15);
-    }
-    .number-pad {
-        width: 80%;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
-    .number-pad button {
-        width: 40%;
-        margin: 5px;
-    }
-}
-
-/* Large devices (laptops/desktops, 900px and up) */
-/* @media only screen and (min-width: 901px) {
-    #container {
-        margin: 30px;
-    }
-    .controls {
-        width: 360px;
-    }
-    #sudoku-grid {
-        width: 360px;
-        height: 360px;
-    }
-    #sudoku-grid div {
-        height: calc(100% / 3);
-        line-height: 40px;
-        font-size: 20px;
-    }
-    .number-pad {
-        width: 360px;
-    }
-    .number-pad button {
-        width: auto;
-        margin: 5px;
-    }
-} */ 
+} 
