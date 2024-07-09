@@ -1,1 +1,1 @@
-# Sudoku-Clone
+# Sudoku
