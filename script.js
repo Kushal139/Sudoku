@@ -1,6 +1,7 @@
 const newGameButton = document.getElementById('new-game');
 const resetButton = document.getElementById('reset');
 const difficulty = document.getElementById('difficulty');
+difficulty.value = 'medium';
 const sudokuGrid = document.getElementById('sudoku-grid');
 let selectedCell = null;
 
@@ -29,7 +30,16 @@ function createSudokuGrid() {
   });
 }
 
-let sudokuBoard = [];
+let sudokuBoard = [[0, 0, 4, 0, 6, 3, 0, 7, 0], 
+  [0, 0, 0, 4, 5, 0, 6, 0, 0], 
+  [6, 0, 9, 1, 0, 8, 0, 0, 0],
+  [2, 0, 0, 3, 0, 6, 0, 0, 0],
+  [0, 4, 0, 0, 0, 9, 0, 5, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 1, 5, 0, 0, 8, 0, 7],
+  [0, 5, 0, 0, 7, 0, 0, 0, 0],
+  [9, 6, 0, 8, 4, 0, 0, 0, 4]
+  ]
 let solvedBoard = [];
 
 function fillBoard(puzzleValues) {
@@ -66,7 +76,9 @@ async function initializeGame() {
   fillBoard(sudokuBoard);
 }
 
-initializeGame();
+fillBoard(sudokuBoard);
+solvedBoard = JSON.parse(JSON.stringify(sudokuBoard));
+solveBoard(solvedBoard);
 
 function removeClassFromAll(className, classToRemove) {
   const elements = document.querySelectorAll(`.${className}`);
@@ -100,7 +112,7 @@ function onNumberClick(event) {
     }
     else{
       selectedCell.innerText = selectedNumber;
-      console.log('incorrect');
+      // console.log('incorrect');
       selectedCell.classList.add('incorrect');
     }
   }
