@@ -100,7 +100,7 @@ function onNumberClick(event) {
     }
     else{
       selectedCell.innerText = selectedNumber;
-      console.log('incorrect');
+      // console.log('incorrect');
       selectedCell.classList.add('incorrect');
     }
   }
