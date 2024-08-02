@@ -130,11 +130,19 @@ function onNumberClick(event) {
     highlightNumbers(selectedNumber);
     if(solvedBoard[row][col] === selectedNumber){
       selectedCell.classList.remove('incorrect');
+      if(isFullyFilled){
+        alert("You Win. Try another game")
+        initializeGame();
+      }
     }
     else{
       selectedCell.classList.add('incorrect');
       mistakes++;
       mistakesElement.innerText = `Mistakes: ${mistakes}/3`;
+      if(mistakes == 3){
+        alert("Too many mistakes, Try again");
+        fillBoard(sudokuBoard);
+      }
     }
   }
 }

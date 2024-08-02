@@ -125,16 +125,13 @@ button:hover {
     background-color: rgb(135, 152, 152);
 }
 
-.status-container {
+#status-container {
     display: flex;
     width: 360px;
     justify-content: space-between;
     /* align-items: center; */
 }
-#mistakes, #time {
-    width: 100%; /* Adjust width as needed */
-    text-align: center; /* Center text within each element */
-}
+
 
 
 @media (max-width: 400px) {
@@ -144,6 +141,9 @@ button:hover {
     #sudoku-grid {
         width: 100%;
         aspect-ratio: 1/1;
+    }
+    #status-container {
+        width: 100%;
     }
 
     .number-pad {
@@ -162,5 +162,4 @@ button:hover {
         border: 2px solid yellow;
         background-color: rgb(238, 123, 123);
     }
-
 } 
