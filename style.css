@@ -43,7 +43,7 @@ h1 {
     flex-wrap: wrap;
     width: 360px;
     aspect-ratio: 1/1;
-    border: 1px solid #ccc;
+    /* border: 2px solid #ccc; */
 }
 
 #sudoku-grid div {
@@ -63,8 +63,8 @@ h1 {
     flex-wrap: wrap;
     width: calc(100% / 3);
     aspect-ratio: 1/1;
-    border: 1px solid #242222;
-    box-sizing: border-box;
+    /* border: 1px solid #242222; */
+    /* box-sizing: border-box; */
     text-align: center;
     /* line-height: 40px; */
     cursor: pointer;
@@ -120,6 +120,22 @@ button:hover {
     border: 3px solid yellow;
     background-color: rgb(238, 123, 123);
 }
+.highlightedNumber {
+    font-weight: bolder;
+    background-color: rgb(135, 152, 152);
+}
+
+.status-container {
+    display: flex;
+    width: 360px;
+    justify-content: space-between;
+    /* align-items: center; */
+}
+#mistakes, #time {
+    width: 100%; /* Adjust width as needed */
+    text-align: center; /* Center text within each element */
+}
+
 
 @media (max-width: 400px) {
     .controls {

@@ -2,7 +2,18 @@ const newGameButton = document.getElementById('new-game');
 const resetButton = document.getElementById('reset');
 const difficulty = document.getElementById('difficulty');
 const sudokuGrid = document.getElementById('sudoku-grid');
+const statusContainer = document.getElementById('status-container');
+
 let selectedCell = null;
+let mistakes = 0;
+let startTime;
+let timerInterval;
+
+const mistakesElement = document.createElement('div');
+mistakesElement.id = 'mistakes';
+
+const timeElement = document.createElement('div');
+timeElement.id = 'time';
 
 function createSudokuGrid() {
   sudokuGrid.innerHTML = '';
@@ -33,6 +44,17 @@ let sudokuBoard = [];
 let solvedBoard = [];
 
 function fillBoard(puzzleValues) {
+  statusContainer.innerText = '';
+  mistakes = 0;
+  
+  mistakesElement.innerText = `Mistakes: ${mistakes}/3`;
+  startTime = Date.now();
+  clearInterval(timerInterval);
+  timerInterval = setInterval(updateTime, 1000);
+
+  statusContainer.appendChild(mistakesElement);
+  statusContainer.appendChild(timeElement);
+
   removeClassFromAll("cell", "incorrect");
   for(let i=0; i<9; i++){
     for(let j=0; j<9; j++){
@@ -48,7 +70,9 @@ function fillBoard(puzzleValues) {
     }
   }
 }
+
 createSudokuGrid();
+
 async function getPuzzleValues() {
   let difficultyLevel = difficulty.value;
   const url = `https://sugoku.onrender.com/board?difficulty=${difficultyLevel}`;
@@ -58,15 +82,20 @@ async function getPuzzleValues() {
 }
 
 async function initializeGame() {
+  statusContainer.innerText = 'Puzzle loading...';
   sudokuBoard = await getPuzzleValues();
-  // console.log("Initial Board:", sudokuBoard);
   solvedBoard = JSON.parse(JSON.stringify(sudokuBoard));
   solveBoard(solvedBoard);
-  // console.log("Solved Board:", solvedBoard);
   fillBoard(sudokuBoard);
 }
 
 initializeGame();
+function updateTime() {
+  const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+  const minutes = Math.floor(elapsedTime / 60);
+  const seconds = elapsedTime % 60;
+  timeElement.innerText = `Time: ${minutes}:${seconds.toString().padStart(2, '0')} s`;
+}
 
 function removeClassFromAll(className, classToRemove) {
   const elements = document.querySelectorAll(`.${className}`);
@@ -77,6 +106,7 @@ function removeClassFromAll(className, classToRemove) {
 
 newGameButton.addEventListener('click', initializeGame);
 resetButton.addEventListener('click', () => fillBoard(sudokuBoard));
+
 document.querySelectorAll('.number').forEach(button => {
   button.addEventListener('click', onNumberClick);
 });
@@ -86,6 +116,9 @@ function onCellClick(event) {
     selectedCell.classList.remove('highlight');
   }
   selectedCell = event.target;
+  if(selectedCell.innerText ){
+    highlightNumbers(selectedCell.innerText);
+  }
   selectedCell.classList.add('highlight');
 }
 
@@ -93,18 +126,19 @@ function onNumberClick(event) {
   if(selectedCell && (selectedCell.innerText == '' || selectedCell.classList.contains('incorrect'))){
     const {row, col} = getRowColFromId(selectedCell.id);
     const selectedNumber = parseInt(event.target.innerText);
-
+    selectedCell.innerText = selectedNumber;
+    highlightNumbers(selectedNumber);
     if(solvedBoard[row][col] === selectedNumber){
-      selectedCell.innerText = selectedNumber;
       selectedCell.classList.remove('incorrect');
     }
     else{
-      selectedCell.innerText = selectedNumber;
-      // console.log('incorrect');
       selectedCell.classList.add('incorrect');
+      mistakes++;
+      mistakesElement.innerText = `Mistakes: ${mistakes}/3`;
     }
   }
 }
+
 function solveBoard(board){
   for(let row = 0; row < 9; row++){
     for(let col = 0; col < 9; col++){
@@ -124,6 +158,7 @@ function solveBoard(board){
   }
   return true;
 }
+
 function isSafe(board, row, col, value){
   // in row
   for(let j= 0; j<9; j++){
@@ -149,9 +184,29 @@ function isSafe(board, row, col, value){
   }
   return true;
 }
+
 function getRowColFromId(cellId){
   const idNumber = parseInt(cellId.replace('id', ''));
   const row = Math.floor(idNumber/9);
   const col = idNumber % 9;
   return {row, col};
+}
+
+function highlightNumbers(number) {
+  const cells = document.querySelectorAll('.cell');
+
+  if (number) {
+    cells.forEach(cell => {
+      if (cell.innerText === number) {
+        cell.classList.add('highlightedNumber');
+      } else {
+        cell.classList.remove('highlightedNumber');
+      }
+    });
+  } else {
+    // Remove the 'highlightedNumber' class from all cells
+    cells.forEach(cell => {
+      cell.classList.remove('highlightedNumber');
+    });
+  }
 }
