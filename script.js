@@ -40,10 +40,13 @@ function createSudokuGrid() {
   });
 }
 
-let sudokuBoard = [];
+let initialBoard = [];
 let solvedBoard = [];
+let currBoard = []
 
 function fillBoard(puzzleValues) {
+  currBoard = initialBoard;
+
   statusContainer.innerText = '';
   mistakes = 0;
   
@@ -83,10 +86,10 @@ async function getPuzzleValues() {
 
 async function initializeGame() {
   statusContainer.innerText = 'Puzzle loading...';
-  sudokuBoard = await getPuzzleValues();
-  solvedBoard = JSON.parse(JSON.stringify(sudokuBoard));
+  initialBoard = await getPuzzleValues();
+  solvedBoard = JSON.parse(JSON.stringify(initialBoard));
   solveBoard(solvedBoard);
-  fillBoard(sudokuBoard);
+  fillBoard(initialBoard);
 }
 
 initializeGame();
@@ -105,7 +108,7 @@ function removeClassFromAll(className, classToRemove) {
 }
 
 newGameButton.addEventListener('click', initializeGame);
-resetButton.addEventListener('click', () => fillBoard(sudokuBoard));
+resetButton.addEventListener('click', () => fillBoard(initialBoard));
 
 document.querySelectorAll('.number').forEach(button => {
   button.addEventListener('click', onNumberClick);
@@ -124,27 +127,43 @@ function onCellClick(event) {
 
 function onNumberClick(event) {
   if(selectedCell && (selectedCell.innerText == '' || selectedCell.classList.contains('incorrect'))){
-    const {row, col} = getRowColFromId(selectedCell.id);
     const selectedNumber = parseInt(event.target.innerText);
-    selectedCell.innerText = selectedNumber;
-    highlightNumbers(selectedNumber);
-    if(solvedBoard[row][col] === selectedNumber){
-      selectedCell.classList.remove('incorrect');
-      if(isFullyFilled){
-        alert("You Win. Try another game")
-        initializeGame();
-      }
+    fillNumber(selectedCell, selectedNumber);
+  }
+}
+function fillNumber(selectedCell, number){
+  const {row, col} = getRowColFromId(selectedCell.id);
+  currBoard[row][col] = number;
+  selectedCell.innerText = number;
+  
+  highlightNumbers(number);
+  if(solvedBoard[row][col] === number){
+    selectedCell.classList.remove('incorrect');
+    if(isFullyFilled()){
+      alert("You Win. Try another game")
+      initializeGame();
     }
-    else{
-      selectedCell.classList.add('incorrect');
-      mistakes++;
-      mistakesElement.innerText = `Mistakes: ${mistakes}/3`;
-      if(mistakes == 3){
-        alert("Too many mistakes, Try again");
-        fillBoard(sudokuBoard);
+  }
+  else{
+    selectedCell.classList.add('incorrect');
+    mistakes++;
+    mistakesElement.innerText = `Mistakes: ${mistakes}/3`;
+    if(mistakes == 3){
+      alert("Too many mistakes, Try again");
+      fillBoard(initialBoard);
+    }
+  }
+}
+
+function isFullyFilled() {
+  for(let row = 0; row < 9; row++){
+    for(let col=0; col<9; col++){
+      if(currBoard[row][col] !== solvedBoard[row][col]){
+        return false;
       }
     }
   }
+  return true;
 }
 
 function solveBoard(board){
@@ -218,3 +237,13 @@ function highlightNumbers(number) {
     });
   }
 }
+
+function handleKeyboardInput(event) {
+  const key = event.key;
+  const number = parseInt(key);
+  if (!isNaN(number) && selectedCell && (selectedCell.innerText === '' || selectedCell.classList.contains('incorrect'))) {
+    fillNumber(selectedCell, number);
+  }
+}
+
+document.addEventListener('keydown', handleKeyboardInput);
